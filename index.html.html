@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purva's Life Stats</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #ffc0cb 0%, #ffb6c1 50%, #ffffff 100%);
+            color: #d63384;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255, 192, 203, 0.3);
+            color: #e91e63;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            color: #d63384;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(255, 192, 203, 0.3);
+            border: 2px solid rgba(255, 182, 193, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-label {
+            font-size: 1.3em;
+            opacity: 0.7;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #d63384;
+        }
+
+        .stat-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #e91e63;
+            font-family: 'Courier New', monospace;
+            line-height: 1.3;
+        }
+
+        .stat-subtitle {
+            font-size: 1em;
+            opacity: 0.6;
+            margin-top: 10px;
+            color: #d63384;
+        }
+
+        .orbit-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 30px auto;
+        }
+
+        .sun {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle, #ffb6c1, #ff69b4);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 50px rgba(255, 105, 180, 0.8);
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 50px rgba(255, 105, 180, 0.8); }
+            50% { box-shadow: 0 0 70px rgba(255, 105, 180, 1); }
+        }
+
+        .earth-orbit {
+            position: absolute;
+            border: 2px solid rgba(255, 182, 193, 0.4);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            width: 280px;
+            height: 280px;
+            transform: translate(-50%, -50%);
+        }
+
+        .earth-spin {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: orbit-earth 30s linear infinite;
+        }
+
+        @keyframes orbit-earth {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .earth {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, #ff69b4, #c71585);
+            border-radius: 50%;
+            box-shadow: 0 0 25px rgba(255, 105, 180, 0.6);
+            top: 0;
+            left: 50%;
+            margin-left: -20px;
+            margin-top: -20px;
+        }
+
+        .moon-orbit {
+            position: absolute;
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            top: 0;
+            left: 50%;
+            margin-left: -40px;
+            margin-top: -40px;
+        }
+
+        .moon-spin {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            top: 0;
+            left: 50%;
+            margin-left: -40px;
+            margin-top: -40px;
+            animation: orbit-moon 3s linear infinite;
+        }
+
+        @keyframes orbit-moon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .moon {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle at 30% 30%, #ffb6c1, #ff1493);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.5);
+            top: 0;
+            left: 50%;
+            margin-left: -6px;
+            margin-top: -6px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .stat-value {
+                font-size: 2em;
+            }
+            .orbit-container {
+                width: 300px;
+                height: 300px;
+            }
+            .earth-orbit, .earth-spin {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1> Happy Birthday Purva BHAI </h1>
+        <p>Your Life in Numbers</p>
+    </div>
+
+    <div class="stats-container">
+        <div class="stat-card">
+            <div class="stat-label">You've Been Alive For</div>
+            <div class="stat-value" id="age-display"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Your Heart Has Beaten</div>
+            <div class="stat-value" id="heartbeats">0</div>
+            <div class="stat-subtitle">times </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">You've Taken</div>
+            <div class="stat-value" id="breaths">0</div>
+            <div class="stat-subtitle">breaths </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">You've Blinked</div>
+            <div class="stat-value" id="blinks">0</div>
+            <div class="stat-subtitle">times </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">You've Slept For</div>
+            <div class="stat-value" id="sleep-days">0</div>
+            <div class="stat-subtitle"></div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Earth Has Orbited The Sun</div>
+            <div class="stat-value" id="orbits">0</div>
+            <div class="stat-subtitle">times since you were born</div>
+            <div class="orbit-container">
+                <div class="sun"></div>
+                <div class="earth-orbit"></div>
+                <div class="earth-spin">
+                    <div class="earth"></div>
+                    <div class="moon-orbit"></div>
+                    <div class="moon-spin">
+                        <div class="moon"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">You've Traveled Through Space</div>
+            <div class="stat-value" id="space-travel">0</div>
+            <div class="stat-subtitle">km </div>
+        </div>
+    </div>
+
+    <script>
+        const birthDate = new Date('2008-12-11T00:00:00');
+        
+        function animateNumber(element, value) {
+            const formatted = value.toLocaleString('en-US');
+            element.textContent = formatted;
+        }
+
+        function updateStats() {
+            const now = new Date();
+            const diffMs = now - birthDate;
+            const diffSeconds = diffMs / 1000;
+            const diffMinutes = diffSeconds / 60;
+            const diffHours = diffMinutes / 60;
+            const diffDays = diffHours / 24;
+            const diffYears = diffDays / 365.25;
+            
+            // Time alive display
+            const years = Math.floor(diffYears);
+            const remainingDays = Math.floor(diffDays % 365.25);
+            const remainingHours = Math.floor(diffHours % 24);
+            const remainingMinutes = Math.floor(diffMinutes % 60);
+            const remainingSeconds = Math.floor(diffSeconds % 60);
+            
+            document.getElementById('age-display').innerHTML = 
+                `${years} years, ${remainingDays} days<br>
+                <span style="font-size: 0.6em">${remainingHours}h ${remainingMinutes}m ${remainingSeconds}s</span>`;
+            
+            // Heartbeats - approximately 100,000 per day
+            const heartbeats = Math.floor(diffDays * 100000);
+            document.getElementById('heartbeats').textContent = heartbeats.toLocaleString('en-US');
+            
+            // Breaths - approximately 20,000 per day
+            const breaths = Math.floor(diffDays * 20000);
+            document.getElementById('breaths').textContent = breaths.toLocaleString('en-US');
+            
+            // Blinks - approximately 14,000 per day (only while awake, ~16 hours)
+            const blinks = Math.floor(diffDays * 14000);
+            document.getElementById('blinks').textContent = blinks.toLocaleString('en-US');
+            
+            // Sleep days (8 hours = 1/3 of life)
+            const sleepDays = Math.floor(diffDays / 3);
+            const sleepYears = Math.floor(sleepDays / 365.25);
+            const sleepRemainingDays = Math.floor(sleepDays % 365.25);
+            document.getElementById('sleep-days').textContent = 
+                `${sleepYears} years, ${sleepRemainingDays} days`;
+            
+            // Earth orbits
+            const orbits = diffYears.toFixed(9);
+            document.getElementById('orbits').textContent = orbits;
+            
+            // Space travel - Earth orbits sun at ~107,000 km/h
+            const spaceKm = Math.floor(diffHours * 107000);
+            document.getElementById('space-travel').textContent = spaceKm.toLocaleString('en-US') + ' km';
+        }
+        
+        // Initial update
+        updateStats();
+        
+        // Update every 100ms for smooth animation
+        setInterval(updateStats, 100);
+    </script>
+</body>
+</html>
